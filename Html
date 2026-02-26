@@ -1,0 +1,163 @@
+<div id="gameUI" style="display:none;">
+  <div class="map-indicator" id="mapIndicator">🏟️ ARENA NORMAL</div>
+  
+  <div class="health-bars">
+    <div class="team-section" id="team1">
+      <div class="team-name" id="team1Name">VOCÊ</div>
+      <div class="fighter-status player1">
+        <div class="fighter-name" id="p1Name">P1</div>
+        <div class="health-bar-container">
+          <div class="health-fill" id="health1" style="width:100%"></div>
+          <div class="health-text" id="healthText1">100%</div>
+        </div>
+      </div>
+      <div class="fighter-status player3" id="p3Status" style="display:none;">
+        <div class="fighter-name" id="p3Name">P1</div>
+        <div class="health-bar-container">
+          <div class="health-fill" id="health3" style="width:100%"></div>
+          <div class="health-text" id="healthText3">100%</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="combo-counter" id="comboCounter">COMBO x0</div>
+    
+    <div class="team-section" id="team2">
+      <div class="team-name" id="team2Name">INIMIGO</div>
+      <div class="fighter-status player2">
+        <div class="fighter-name" id="p2Name" style="text-align:right;">BOT</div>
+        <div class="health-bar-container">
+          <div class="health-fill" id="health2" style="width:100%"></div>
+          <div class="health-text" id="healthText2">100%</div>
+        </div>
+      </div>
+      <div class="fighter-status player4" id="p4Status" style="display:none;">
+        <div class="fighter-name" id="p4Name" style="text-align:right;">BOT 2</div>
+        <div class="health-bar-container">
+          <div class="health-fill" id="health4" style="width:100%"></div>
+          <div class="health-text" id="healthText4">100%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="controls-hint"><span>👆 ARRASTE para socar! Use JOYSTICK para mover! 👊</span></div>
+  
+  <div class="joystick-container" id="joystick1">
+    <div class="joystick-base">
+      <div class="joystick-stick" id="stick1"></div>
+    </div>
+    <div class="joystick-label">MOVER</div>
+  </div>
+  
+  <div class="joystick-container" id="joystick2" style="display:none;">
+    <div class="joystick-base">
+      <div class="joystick-stick" id="stick2"></div>
+    </div>
+    <div class="joystick-label">MOVER P2</div>
+  </div>
+  
+  <div id="cameraIndicator" class="camera-target-indicator" style="display:none;"></div>
+</div>
+
+<div class="menu-screen" id="mainMenu">
+  <div class="menu-content">
+    <h1 class="game-title">PUNCH MAN</h1>
+    <p class="game-subtitle">Batalha de Socos Épica!</p>
+    
+    <button class="btn btn-quick" onclick="quickStart()">⚡ JOGAR AGORA</button>
+    
+    <div class="divider">OU CONFIGURAR</div>
+    
+    <div class="compact-section">
+      <div class="mode-select">
+        <label>MODO:</label>
+        <select onchange="selectMode(this.value)" id="modeSelect">
+          <option value="1v1">1 VS 1</option>
+          <option value="2v2">2 VS 2</option>
+          <option value="2v2coop">2 JOGADORES VS BOTS</option>
+        </select>
+      </div>
+      
+      <div class="name-inputs">
+        <input type="text" id="nameInput1" placeholder="Nome Jogador 1" maxlength="8" value="P1">
+        <input type="text" id="nameInput2" placeholder="Nome Jogador 2" maxlength="8" value="P2" style="display:none;">
+      </div>
+    </div>
+    
+    <button class="btn" onclick="goToCharSelect()">ESCOLHER PERSONAGEM →</button>
+  </div>
+</div>
+
+<div class="menu-screen" id="charSelectScreen" style="display:none;">
+  <div class="menu-content">
+    <h2 class="select-title">PERSONAGEM</h2>
+    
+    <div class="char-grid">
+      <div class="char-card selected" onclick="selectChar('boxer')" id="char-boxer">
+        <span class="char-icon">🥊</span>
+        <span class="char-name">BOXEADOR</span>
+        <span class="char-diff easy">FÁCIL</span>
+      </div>
+      <div class="char-card" onclick="selectChar('ninja')" id="char-ninja">
+        <span class="char-icon">🥷</span>
+        <span class="char-name">NINJA</span>
+        <span class="char-diff hard">DIFÍCIL</span>
+      </div>
+      <div class="char-card" onclick="selectChar('robot')" id="char-robot">
+        <span class="char-icon">🤖</span>
+        <span class="char-name">ROBÔ</span>
+        <span class="char-diff medium">MÉDIO</span>
+      </div>
+    </div>
+    
+    <div class="selected-info" id="charInfo">
+      <strong>Boxeador:</strong> Equilibrado para iniciantes
+    </div>
+    
+    <div class="button-row">
+      <button class="btn btn-small" onclick="backToMenu()">← VOLTAR</button>
+      <button class="btn btn-small" onclick="goToMapSelect()">MAPA →</button>
+    </div>
+  </div>
+</div>
+
+<div class="menu-screen" id="mapSelectScreen" style="display:none;">
+  <div class="menu-content">
+    <h2 class="select-title">MAPA</h2>
+    
+    <div class="map-grid">
+      <div class="map-card selected" onclick="selectMap('normal')" id="map-normal">
+        <span class="map-icon">🏟️</span>
+        <span class="map-name">NORMAL</span>
+      </div>
+      <div class="map-card" onclick="selectMap('ice')" id="map-ice">
+        <span class="map-icon">❄️</span>
+        <span class="map-name">GELO</span>
+      </div>
+      <div class="map-card" onclick="selectMap('space')" id="map-space">
+        <span class="map-icon">🚀</span>
+        <span class="map-name">ESPAÇO</span>
+      </div>
+    </div>
+    
+    <div class="selected-info" id="mapInfo">
+      <strong>Arena Normal:</strong> Chão sólido, sem perigos
+    </div>
+    
+    <div class="button-row">
+      <button class="btn btn-small" onclick="backToChar()">← VOLTAR</button>
+      <button class="btn btn-confirm" onclick="startGame()">✓ LUTAR!</button>
+    </div>
+  </div>
+</div>
+
+<div class="countdown" id="countdown">3</div>
+
+<div class="winner-screen" id="winnerScreen">
+  <div class="winner-text" id="winnerText">VITÓRIA!</div>
+  <button class="btn" onclick="resetGame()">NOVAMENTE</button>
+  <button class="btn btn-menu" onclick="backToMainMenu()">MENU</button>
+</div>
+
+<canvas id="gameCanvas"></canvas>
